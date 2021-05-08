@@ -9,13 +9,19 @@
  * @returns {Array<number>} array of vals from, to, by
  */
 function pyRange(start: number, end?: number, by?: number): Array<number> {
+
     let result: Array<number> = [];
-    by = (by === undefined) ? 1 : by;
+
     if (arguments.length === 1) {
         end = start;
         start = 0;
         by = 1;
     }
+
+    // inaczej angular strict checker protestuje
+    by = (by === undefined || by === 0) ? 1 : by;
+    end = (end === undefined) ? (start + 1) : end;
+
     if (start < end) {
         for (let i = start; i < end; i += by) {
             result.push(i);
@@ -25,6 +31,7 @@ function pyRange(start: number, end?: number, by?: number): Array<number> {
             result.push(i);
         }
     }
+
     return result;
 }
 

@@ -2,20 +2,19 @@ interface Dictionary<T> {
     [Key: string]: T;
 };
 
-function getUniqueInts(arr: number[]): number[] {
-    let result: Dictionary<number> = {};
-    for (let i = 0; i < arr.length; i++) {
-        result[arr[i]] = 1;
-    }
-    return Object.keys(result).map(s => parseInt(s));
+function id(x: any): any {
+    return x;
 }
 
-function getUniqueStrings(arr: string[]): string[] {
+function getUnique(arr: any[],
+    arrEltToKey: Function = id,
+    keyToArrElt: Function = id): any[] {
+
     let result: Dictionary<number> = {};
-    for (let i = 0; i < arr.length; i++) {
-        result[arr[i]] = 1;
+    for (let elt of arr) {
+        result[arrEltToKey(elt)] = 1;
     }
-    return Object.keys(result);
+    return Object.keys(result).map(elt => keyToArrElt(elt));
 }
 
-export { getUniqueInts, getUniqueStrings };
+export default getUnique;
